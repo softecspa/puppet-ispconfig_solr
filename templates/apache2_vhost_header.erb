@@ -1,0 +1,11 @@
+<VirtualHost <%= listen_ip %>:<%= listen_port %>>
+    ServerName <%= servername %>
+<% if server_admin != '' -%>
+    ServerAdmin <%= server_admin %>
+<% end -%>
+    DocumentRoot <%= document_root %>
+    ErrorLog <%= errorlog %>
+    CustomLog <%= accesslog %> combined
+
+    ProxyPass / balancer://solr-<%= scope.lookupvar('cluster') %>/
+    ProxyPassReverse / balancer://solr-<%= scope.lookupvar('cluster') %>

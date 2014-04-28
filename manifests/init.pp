@@ -1,0 +1,3 @@
+class ispconfig_solr {
+  #
+}
