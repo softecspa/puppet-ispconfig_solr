@@ -18,6 +18,7 @@ define ispconfig_solr::instance (
   $balanced             = true,
   $private_balancer     = 'apache2',
   $public_balancer      = 'nginx',
+  $cluster              = $cluster,
 ) {
 
   $listen = $listen_address?{
