@@ -1,4 +1,6 @@
-class ispconfig_solr::newrelic {
+class ispconfig_solr::newrelic (
+  $path,
+) {
 
   if $newrelic_license_free_key == '' {
     fail ('please define global variables newrelic_license_free_key')
@@ -16,10 +18,12 @@ class ispconfig_solr::newrelic {
     }
   }
 
-  #newrelic::java {
-  #  "PHP Application on Cluster $cluster":
-  #    newrelic_license_key      => $newrelic_license_key,
-  #    newrelic_php_conf_appname => "PHP Application on Cluster $cluster",
-  #}
+  if !defined(Class['newrelic::java']) {
+    class{'newrelic::java':
+      path                        => "$path/newrelic",
+      newrelic_license_key        => $newrelic_license_key,
+      newrelic_java_conf_appname  => "Java Apps on $cluster",
+    }
+  }
 
 }

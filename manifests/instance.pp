@@ -27,6 +27,11 @@ define ispconfig_solr::instance (
     default => $listen_address
   }
 
+  $java_options = $newrelic?{
+    true  => "-javaagent:${solr_root}/newrelic/newrelic.jar",
+    false => '',
+  }
+
   solr::instance {$name:
     instance_name       => $instance_name,
     app_server          => $app_server,
@@ -40,6 +45,7 @@ define ispconfig_solr::instance (
     listen_address      => $listen_address,
     listen_interface    => $listen_interface,
     port                => $port,
+    java_options        => $java_options,
     solr_version        => $solr_version,
     solr_root           => $solr_root,
     cloud               => $cloud,
@@ -92,6 +98,8 @@ define ispconfig_solr::instance (
     }
   }
   if $newrelic {
-    include ispconfig_solr::newrelic
+    ispconfig_solr::newrelic {$name:
+      path => $solr_root,
+    }
   }
 }
