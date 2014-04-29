@@ -19,6 +19,7 @@ define ispconfig_solr::instance (
   $private_balancer     = 'apache2',
   $public_balancer      = 'nginx',
   $cluster              = $cluster,
+  $newrelic             = true,
 ) {
 
   $listen = $listen_address?{
@@ -89,5 +90,8 @@ define ispconfig_solr::instance (
         fail ('public_balancer through apache is not implemented yet')
       }
     }
+  }
+  if $newrelic {
+    include ispconfig_solr::newrelic
   }
 }
