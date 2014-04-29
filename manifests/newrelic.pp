@@ -1,4 +1,4 @@
-class ispconfig_solr::newrelic (
+define ispconfig_solr::newrelic (
   $path,
 ) {
 
