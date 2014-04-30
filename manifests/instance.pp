@@ -32,24 +32,36 @@ define ispconfig_solr::instance (
     false => '',
   }
 
+  $in = $instance_name? {
+    ''      => $name,
+    default => $instance_name
+  }
+
+  if $newrelic {
+    $jetty_deploy_parameters = {"newrelic-appname-${in}" => {param_name => 'com.newrelic.agent.APPLICATION_NAME', param_value => "solr-${in}"},}
+  } else {
+    $jetty_deploy_parameters = ''
+  }
+
   solr::instance {$name:
-    instance_name       => $instance_name,
-    app_server          => $app_server,
-    jetty_version       => $jetty_version,
-    jetty_s3_bucket     => $jetty_s3_bucket,
-    jetty_download_url  => $jetty_download_url,
-    jetty_root          => $jetty_root,
-    jetty_user          => $jetty_user,
-    jetty_uid           => $jetty_uid,
-    jetty_gid           => $jetty_gid,
-    listen_address      => $listen_address,
-    listen_interface    => $listen_interface,
-    port                => $port,
-    java_options        => $java_options,
-    solr_version        => $solr_version,
-    solr_root           => $solr_root,
-    cloud               => $cloud,
-    zookeeper_servers   => $zookeeper_servers,
+    instance_name           => $instance_name,
+    app_server              => $app_server,
+    jetty_version           => $jetty_version,
+    jetty_s3_bucket         => $jetty_s3_bucket,
+    jetty_download_url      => $jetty_download_url,
+    jetty_root              => $jetty_root,
+    jetty_user              => $jetty_user,
+    jetty_uid               => $jetty_uid,
+    jetty_gid               => $jetty_gid,
+    jetty_deploy_parameters => $jetty_deploy_parameters,
+    listen_address          => $listen_address,
+    listen_interface        => $listen_interface,
+    port                    => $port,
+    java_options            => $java_options,
+    solr_version            => $solr_version,
+    solr_root               => $solr_root,
+    cloud                   => $cloud,
+    zookeeper_servers       => $zookeeper_servers,
   }
 
   if $balanced {
