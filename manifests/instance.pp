@@ -1,25 +1,29 @@
 define ispconfig_solr::instance (
-  $instance_name        = '',
-  $app_server           = 'jetty',
-  $jetty_version        = '',
-  $jetty_s3_bucket      = '',
-  $jetty_download_url   = '',
-  $jetty_root           = '/opt',
-  $jetty_user           = 'jetty',
-  $jetty_uid            = undef,
-  $jetty_gid            = undef,
-  $listen_address       = '',
-  $listen_interface     = '',
+  $instance_name          = '',
+  $app_server             = 'jetty',
+  $jetty_version          = '',
+  $jetty_s3_bucket        =  '',
+  $jetty_download_url     = '',
+  $jetty_root             = '/opt',
+  $jetty_user             = 'jetty',
+  $jetty_uid              = undef,
+  $jetty_gid              = undef,
+  $listen_address         = '',
+  $listen_interface       = '',
   $port,
   $solr_version,
-  $solr_root            = '/opt',
-  $cloud                = true,
-  $zookeeper_servers    = '',
-  $balanced             = true,
-  $private_balancer     = 'apache2',
-  $public_balancer      = 'nginx',
-  $cluster              = $cluster,
-  $newrelic             = true,
+  $solr_root              = '/opt',
+  $cloud                  = true,
+  $zookeeper_servers      = '',
+  $balanced               = true,
+  $private_balancer       = 'apache2',
+  $public_balancer        = 'nginx',
+  $cluster                = $cluster,
+  $newrelic               = true,
+  $monitored              = true,
+  $monitored_hostname     = $::hostname,
+  $notifications_enabled  = undef,
+  $notification_period    = undef,
 ) {
 
   $listen = $listen_address?{
@@ -62,7 +66,13 @@ define ispconfig_solr::instance (
     solr_root               => $solr_root,
     cloud                   => $cloud,
     zookeeper_servers       => $zookeeper_servers,
+    monitored               => $monitored,
+    monitored_hostname      => $monitored_hostname,
+    notifications_enabled   => $notifications_enabled,
+    notification_period     => $notification_period
   }
+
+
 
   if $balanced {
     if ($private_balancer != 'nginx') and ($private_balancer != 'haproxy') and ($private_balancer != 'apache2') {
