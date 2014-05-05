@@ -1,0 +1,4 @@
+SOLR_ADDRESS='<%= @local_solr_address %>:<%= @local_solr_port %>'
+ZOOKEEPER_CONF='/usr/local/bin/zookeeper_config'
+CURL='/usr/bin/curl'
+OUTPUT_CSV_FILE='/var/www/cluster.<%= scope.lookupvar('cluster') %>.<%= scope.lookupvar('clusterdomain') %>/web/solr_accounting.csv'
