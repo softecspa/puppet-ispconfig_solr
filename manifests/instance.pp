@@ -1,6 +1,6 @@
 # Define: ispconfig_solr::instance
 #
-# This define creates a solr instance.
+# This define is a wrapper of solr::instance. It creates a solr instance and configure it for use in IspConfig environment
 #
 # Parameters:
 #
@@ -47,15 +47,17 @@
 #   Root path where solr will be installed. Default: /opt
 #
 # [*cloud*]
-#   If true, solr will be configured with zookeeper utilization for a SolrCloud installation. Zookeeper nodes have to be defined first or defined used zookeeper_servers parameter (See example). Default: true
+#   If true, solr will be configured with zookeeper utilization for a SolrCloud installation. Zookeeper nodes have to be defined first or defined used zookeeper_servers
+#   parameter (See example). Default: true
 #
 # [*zookeeper_servers*]
-#   String that can be used, in a SolrCloud installation, to specify zookeeper ensemble's nodes. String must be in form $zoohost1:$port1,$zoohost2:$port2,$zoohost3:$port3 eventually
-#   followed by /$cluster if zookeeper ensemble is chrooted (ex: a zookeeper ensembled used by more clusters). If not specified a query to the puppetdb will be done to retrieve zookeeper's nodes
+#   String that can be used, in a SolrCloud installation, to specify zookeeper ensemble's nodes. String must be in form $zoohost1:$port1,$zoohost2:$port2,$zoohost3:$port3
+#   eventually followed by /$cluster if zookeeper ensemble is chrooted (ex: a zookeeper ensembled used by more clusters). If not specified a query to the puppetdb will be done
+#   to retrieve zookeeper's nodes
 #
 # [*balanced*]
-#   If true, instance will be balanced. All solr instances on the same cluster (identified by cluster variable) will be balanced twice: on a public (and protected) address, and on a private
-#   address used by application. Default: true
+#   If true, instance will be balanced. All solr instances on the same cluster (identified by cluster variable) will be balanced twice: on a public (and protected) address, and
+#   on a private address used by application. Default: true
 #
 # [*private_balancer*]
 #   If balanced=true, private balancement will be done through this balancer. Accepted value: apache2, nginx, haproxy but actually only apache2 is supported. Default: apache2

@@ -28,6 +28,7 @@ function help()
 
     OPTIONS:
     -a|--action:\t action to perform. Available value are <create|delete>
+    -l|--listconfig:\t only print a list of available conf
     -w|--webnn:\t\t It indicate the ispconfig webNN that will use the collection. If cwd is $ROOT_DIR/webNN, you don't need to specify it: webNN will be used
     -c|--collection:\t name of collection to create|delete. NOTE: if --action=create a webNN- suffix will be added if it's not already present in collection name.
     \t\t\t Example: --action=create --webnn=web10 --collection=example will create a collection named web10-example
@@ -53,7 +54,7 @@ function clean()
     unlock
 }
 
-TEMP=`getopt -o :a:w:c:s:dh --long action:,webnn:,collection:,useconf:,confdir:,confname:,shards:,replica:,debug,help -n "$0" -- "$@"`
+TEMP=`getopt -o :a:w:c:s:dhl --long action:,webnn:,collection:,useconf:,confdir:,confname:,shards:,replica:,debug,help,listconfig -n "$0" -- "$@"`
 log "`whoami` Start with following arguments: ${TEMP}"
 
 if [ $? != 0 ] ; then echo "Terminating..." >&2 ; exit 1 ; fi
@@ -131,6 +132,12 @@ while true; do
             log_error "--replica value must be integer"
             exit 1
         fi
+        shift 2
+        ;;
+    -l | --listconfig)
+            CONFIG_LIST=`${ZOOKEEPER_CONF} --action=listconfig`
+            echo $CONFIG_LIST | sed -e 's/\ /\n/'
+            exit 0
         shift 2
         ;;
     -h | --help)
