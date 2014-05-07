@@ -1,5 +1,6 @@
-puppet-ispconfig_solr
+ispconfig_solr
 =====================
+Most usefull define is ispconfig_solr::instance
 
 == Define: ispconfig_solr::instance
 

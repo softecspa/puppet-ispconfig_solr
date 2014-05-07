@@ -191,7 +191,8 @@ define ispconfig_solr::instance (
 
   if $newrelic {
     $jetty_deploy_parameters = {"newrelic-appname-${in}" => {param_name => 'com.newrelic.agent.APPLICATION_NAME', param_value => "solr-${in}"},}
-  } else {
+  }
+  else {
     $jetty_deploy_parameters = ''
   }
 
