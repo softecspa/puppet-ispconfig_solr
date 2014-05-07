@@ -96,7 +96,8 @@ This define is a wrapper of solr::instance. It creates a solr instance and confi
  First, we define the zookeeper ensemble's nodes in the cluster ZOO definition (suppose three instances on the same machine).
  After this, we define ispconfig_solr::instance, the define will call the puppetDB to know the zookeeper's nodes.
 
-ZOOKEEPER SECTION
+##### ZOOKEEPER SECTION ####################
+
 node ZOO {
   $cluster = 'zoo'
 
@@ -108,6 +109,7 @@ node ZOO {
     tags    => ['SOLRCLUSTER']
   }
 }
+
 NOTE: see zookeeper::ensemble::solr documentation for more information about used variables
 
 node zoohost inherits ZOO {
@@ -118,7 +120,10 @@ node zoohost inherits ZOO {
   zookeeper::instance {'2':}
   zookeeper::instance {'3':}
 }
-SOLR SECTION
+
+###########################################
+
+##### SOLR SECTION ########################
 
 node SOLRCLUSTER {
 
@@ -144,11 +149,17 @@ node solr2 inherits SOLRCLUSTER {
     port  => '8984',
   }
 }
-ISPCONFIG FE SECTION
+
+###########################################
+
+###### ISPCONFIG FE SECTION ###############
+
 node frontend01 inherits SOLRCLUSTER {
   enable_solr = true
   include ispconfig_cluster_slave
 }
+
+###########################################
 
 
 
