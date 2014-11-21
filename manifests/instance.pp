@@ -258,7 +258,7 @@ define ispconfig_solr::instance (
       }
 
       'nginx': {
-        @@isconfig_solr::nginx::upstream_member{ "${listen}:${port}":
+        @@ispconfig_solr::nginx::upstream_member{ "${listen}:${port}":
           upstream  => "solr-${cluster}",
           server    => $listen,
           port      => $port
