@@ -1,4 +1,4 @@
-define ispconfig_solr::upstream_member (
+define ispconfig_solr::nginx::upstream_member (
   $upstream,
   $server,
   $port
