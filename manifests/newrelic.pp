@@ -41,11 +41,13 @@ define ispconfig_solr::newrelic (
 
   include softec_newrelic::server
 
+  $newrelic_java_version = regsubst($java_version,'[^(0-9)]','','G')
+
   if !defined(Class['softec_newrelic::java']) {
     class{'softec_newrelic::java':
       newrelic_java_plugin_path => $path,
       newrelic_java_appname     => "Java Apps on ${cluster}",
-      java_version              => '7',
+      java_version              => $newrelic_java_version
     }
   }
 
