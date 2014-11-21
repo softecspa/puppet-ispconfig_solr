@@ -30,21 +30,22 @@
 #
 define ispconfig_solr::newrelic (
   $path,
+  $java_version,
+  $newrelic_license_key = hiera('newrelic_license_key'),
+  $cluster              = $cluster,
 ) {
 
   if $newrelic_license_free_key == '' {
     fail ('please define global variables newrelic_license_free_key')
   }
 
+  include softec_newrelic::server
 
-  if !defined (Newrelic::Server[$hostname]) {
-    newrelic::server { $hostname: }
-  }
-
-  if !defined(Class['newrelic::java']) {
-    class{'newrelic::java':
-      path                        => "$path/newrelic",
-      newrelic_java_conf_appname  => "Java Apps on $cluster",
+  if !defined(Class['softec_newrelic::java']) {
+    class{'softec_newrelic::java':
+      newrelic_java_plugin_path => $path,
+      newrelic_java_appname     => "Java Apps on ${cluster}",
+      java_version              => '7',
     }
   }
 

@@ -72,7 +72,7 @@
 #  Used to override $cluster variable defined at cluster level. Default: $cluster
 #
 # [*newrelic*]
-#  If true, newrelic java agent will be installed through newrelic::java define. Default: true
+#  If true, newrelic java agent will be installed through softec_newrelic::java define. Default: true
 #
 # [*monitored*]
 #  It true, instance will ben monitored by nagios
@@ -272,6 +272,7 @@ define ispconfig_solr::instance (
   if $newrelic {
     ispconfig_solr::newrelic {$name:
       path => $solr_root,
+      #    java_version  => 
     }
   }
 }
