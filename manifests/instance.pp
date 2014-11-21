@@ -271,7 +271,7 @@ define ispconfig_solr::instance (
   }
   if $newrelic {
     ispconfig_solr::newrelic {$name:
-      path          => $solr_root,
+      path          => "${solr_root}/newrelic",
       java_version  => 'openjdk-7-jre'
     }
   }

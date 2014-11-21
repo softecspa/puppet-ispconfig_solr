@@ -43,8 +43,6 @@ define ispconfig_solr::newrelic (
 
   $newrelic_java_version = regsubst($java_version,'[^(0-9)]','','G')
 
-  notice($path)
-
   if !defined(Class['softec_newrelic::java']) {
     class{'softec_newrelic::java':
       newrelic_java_plugin_path => $path,
