@@ -260,7 +260,9 @@ define ispconfig_solr::instance (
       'nginx': {
         # questo risorsa virtuale serve perchè la define nginx::resource::upstream::member utilizza un parametro in essa contenuto.
         # Se la class nginx non è presente il target del frammento esportato non viene correttamente valorizzato
-        @class{'nginx::config':}
+        if !defined(Class['nginx::config']) {
+          @class{'nginx::config':}
+        }
 
         @@nginx::resource::upstream::member { "${listen}:${port}":
           upstream  => "solr-${cluster}",
