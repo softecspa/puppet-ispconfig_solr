@@ -245,9 +245,10 @@ define ispconfig_solr::instance (
       }
 
       'apache2': {
-        @@concat_fragment{"solr-balancement+002-${listen}-${port}.tmp":
-          content => "BalancerMember http://${listen}:${port}",
-          tag     => "solr-${cluster}"
+        @@apache::balancermember { "${listen}:${port}":
+          balancer_cluster  => "solr-${cluster}",
+          url               => "http://${listen}:${port}",
+          tag               => "solr-${cluster}"
         }
       }
     }
